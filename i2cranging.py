@@ -25,6 +25,10 @@ def check_addr_for_device(addr):
       return False
     return True
 
+def check_echo(addr, value):
+    i2c.write_byte_data(addr, 0, value)
+    return i2c.read_byte(addr)
+
 def scan_addr_range():
     L = []
     for i in range(127):
@@ -35,4 +39,9 @@ def scan_addr_range():
     
 def start_ranging(addr):
     return (0 == i2c.read_byte_data(addr, 1))
+
+def set_i2c_addr(addr, new_addr):
+    i2c.write_byte_data(addr, 0xFE, new_addr)
+    if(i2c.read_byte(addr)):
+        print "after reset device 0x%x will have address 0x%x" %(addr, new_addr)
 
