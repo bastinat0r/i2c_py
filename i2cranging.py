@@ -47,17 +47,17 @@ def set_i2c_addr(addr, new_addr):
 
 def set_short_addr(addr, short_addr):
     """set short address for ranging node"""
-    i2c.write_byte_data(addr, 0xFD, short_add)
+    i2c.write_byte_data(addr, 0xFD, short_addr)
     return (i2c.read_byte(addr) == 0)
 
 def set_reflector_addr(addr, reflector_addr):
     """set reflector address for ranging node"""
-    i2c.write_byte_data(addr, 0xFC, reflector_add)
+    i2c.write_byte_data(addr, 0xFC, reflector_addr)
     return (i2c.read_byte(addr) == 0)
 
 def set_initiator_addr(addr, initiator_addr):
     """set initiator address for ranging node"""
-    i2c.write_byte_data(addr, 0xFB, initiator_add)
+    i2c.write_byte_data(addr, 0xFB, initiator_addr)
     return (i2c.read_byte(addr) == 0)
 
 def clear_device_i2c_buffer(addr):
