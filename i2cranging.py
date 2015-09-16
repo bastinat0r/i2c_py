@@ -15,7 +15,7 @@ def convert_block_to_ranging(block):
     return d
 
 def read_ranging_result(addr):
-    block = i2c.read_i2c_block_data(0x52, 2, 8)
+    block = i2c.read_i2c_block_data(addr, 2, 8)
     return convert_block_to_ranging(block)
 
 def check_addr_for_device(addr):
