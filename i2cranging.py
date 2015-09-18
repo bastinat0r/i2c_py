@@ -62,3 +62,16 @@ def set_initiator_addr(addr, initiator_addr):
 
 def clear_device_i2c_buffer(addr):
     i2c.write_byte(addr, 0xFF)
+
+def get_short_addr(addr):
+    """get short address for ranging node"""
+    return i2c.read_word_data(addr, 0xED)
+
+def get_reflector_addr(addr):
+    """get reflector address for ranging node"""
+    return i2c.read_word_data(addr, 0xEC)
+
+def get_initiator_addr(addr):
+    """get initiator address for ranging node"""
+    return i2c.read_word_data(addr, 0xEB)
+
