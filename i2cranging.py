@@ -7,11 +7,11 @@ address = 0x71
 
 i2c = smbus.SMBus(1)
 
-fmt = '<BLBBB'
+fmt = '<BBHHH'
 def convert_block_to_ranging(block):
     str = ''.join(map(chr, block))
     t = struct.unpack(fmt, str)
-    d = {"status" : t[0], "range" : t[1], "dqf" : t[2], "addr1" : t[3], "addr2" : t[4]}
+    d = {"status" : t[0], "dqf" : t[1], "range" : t[2], "addr1" : t[3], "addr2" : t[4]}
     return d
 
 def read_ranging_result(addr):
@@ -37,8 +37,21 @@ def scan_addr_range():
             L.append(i)
     return L
 
-def start_ranging(addr):
+def start_ranging(addr, target=None):
+    if target:
+        i2c.write_word_data(addr, 1, target)
+        return i2c.read_byte(addr)
     return (0 == i2c.read_byte_data(addr, 1))
+
+def start_remote_ranging(addr, source=None, target=None):
+    if source and target:
+        i2c.write_block_data(addr, 3, source & 0xFF00, source & 0xFF, target & 0xFF00, target & 0xFF)
+        return i2c.read_byte(addr)
+    if source:
+        i2c.write_word_data(addr, 3, source)
+        return i2c.read_byte(addr)
+
+    return (0 == i2c.read_byte_data(addr, 3))
 
 def set_i2c_addr(addr, new_addr):
     i2c.write_byte_data(addr, 0xFE, new_addr)

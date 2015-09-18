@@ -27,7 +27,7 @@ if __name__ == '__main__':
                 sum += i[0]
                 div += i[1]
             if(div > 0):
-                print "dqf: %i, range: %i, avg: %i" %(range_result['dqf'], range_result['range'], sum / len(queue))
+                print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue))
         except IOError:
             print "i2c Error"
         time.sleep(args.time)
