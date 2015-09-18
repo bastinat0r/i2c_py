@@ -52,7 +52,7 @@ def set_short_addr(addr, short_addr):
 
 def set_reflector_addr(addr, reflector_addr):
     """set reflector address for ranging node"""
-    i2c.write_wor(addr, 0xFC, reflector_addr)
+    i2c.write_word_data(addr, 0xFC, reflector_addr)
     return (i2c.read_byte(addr) == 0)
 
 def set_initiator_addr(addr, initiator_addr):
