@@ -14,11 +14,12 @@ if __name__ == '__main__':
     parser.add_argument('--target', type=auto_int, help='ranging id of target node')
     parser.add_argument('--num', type=auto_int, help='number of readings to take')
     parser.add_argument('--csv', dest='csv', action='store_true')
-    parser.set_defaults(feature=False)
+    parser.set_defaults(feature=False, num=-1)
     args = parser.parse_args()
     if args.csv:
         print "from, to, dqf, range"
-    while True:
+    num_measurements = 0
+    while args.num < 0 or num_measurements < args.num:
         set_reflector_addr(args.address, args.target)
         try:
             start_ranging(args.address)
@@ -39,3 +40,4 @@ if __name__ == '__main__':
             except IOError:
                 print "i2c Error"
         time.sleep(args.time)
+        num_measurements++
