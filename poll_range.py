@@ -9,7 +9,7 @@ queue = []
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='continuously read range from i2c ranging node')
-    parser.add_argument('address', type=auto_int, help='i2c address of ranging node to be used', required=True)
+    parser.add_argument('address', type=auto_int, help='i2c address of ranging node to be used')
     parser.add_argument('--time', type=float, default=1, help='time to wait between each ranging')
     parser.add_argument('--target', type=auto_int, help='ranging id of target node')
     parser.add_argument('--num', type=auto_int, help='number of readings to take')
@@ -20,7 +20,8 @@ if __name__ == '__main__':
         print "from, to, dqf, range"
     num_measurements = 0
     while args.num < 0 or num_measurements < args.num:
-        set_reflector_addr(args.address, args.target)
+        if(args.target):
+            set_reflector_addr(args.address, args.target)
         try:
             start_ranging(args.address)
             range_result = read_ranging_result(args.address)
@@ -33,11 +34,11 @@ if __name__ == '__main__':
                 sum += i[0]
                 div += i[1]
             if args.csv:
-                "%x, %x, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'])
+                print "%x, %x, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'])
             else:
                 if(div > 0):
                     print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue))
-            except IOError:
-                print "i2c Error"
+        except IOError:
+            print "i2c Error"
         time.sleep(args.time)
-        num_measurements++
+        num_measurements += 1
