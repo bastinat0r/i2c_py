@@ -13,11 +13,15 @@ if __name__ == '__main__':
     parser.add_argument('--time', type=float, default=1, help='time to wait between each ranging')
     parser.add_argument('--target', type=auto_int, help='ranging id of target node')
     parser.add_argument('--num', type=auto_int, help='number of readings to take')
+    parser.add_argument('--distance', type=auto_int, help='distance value for csv file')
     parser.add_argument('--csv', dest='csv', action='store_true')
     parser.set_defaults(feature=False, num=-1)
     args = parser.parse_args()
     if args.csv:
-        print "from, to, dqf, range"
+        if args.distance:
+            print "from, to, dqf, range, status, distance"
+        else:
+            print "from, to, dqf, range, status"
     num_measurements = 0
     while args.num < 0 or num_measurements < args.num:
         if(args.target):
@@ -34,11 +38,15 @@ if __name__ == '__main__':
                 sum += i[0]
                 div += i[1]
             if args.csv:
-                print "%x, %x, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'])
+                if args.distance:
+                    print "%x, %x, %i, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'], args.distance)
+                else:
+                    print "%x, %x, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'])
             else:
                 if(div > 0):
-                    print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue))
+                    print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i, status: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue, range_result['status']))
+            if(range_result['dqf'] > 0):
+                num_measurements += 1
         except IOError:
             print "i2c Error"
         time.sleep(args.time)
-        num_measurements += 1
