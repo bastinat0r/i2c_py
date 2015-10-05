@@ -15,9 +15,8 @@ if __name__ == '__main__':
     parser.set_defaults(feature=False, num=-1)
     args = parser.parse_args()
     try:
-        set_freq_start(addr, args.freq_start)
-        set_freq_step(addr, args.freq_step)
-        set_freq_stop(addr, args.freq_stop)
+        set_freq_start(args.address, args.freq_start)
+        set_freq_step(args.address, args.freq_step)
+        set_freq_stop(args.address, args.freq_stop)
     except IOError:
         print "i2c Error"
-    time.sleep(args.time)

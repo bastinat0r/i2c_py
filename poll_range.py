@@ -13,7 +13,7 @@ if __name__ == '__main__':
     parser.add_argument('--time', type=float, default=1, help='time to wait between each ranging')
     parser.add_argument('--target', type=auto_int, help='ranging id of target node')
     parser.add_argument('--num', type=auto_int, help='number of readings to take')
-    parser.add_argument('--distance', type=auto_int, help='distance value for csv file')
+    parser.add_argument('--distance', type=float, help='distance value for csv file')
     parser.add_argument('--csv', dest='csv', action='store_true')
     parser.set_defaults(feature=False, num=-1)
     args = parser.parse_args()
@@ -44,7 +44,7 @@ if __name__ == '__main__':
                     print "%x, %x, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'])
             else:
                 if(div > 0):
-                    print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i, status: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue, range_result['status']))
+                    print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i, status: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue), range_result['status'])
             if(range_result['dqf'] > 0):
                 num_measurements += 1
         except IOError:
