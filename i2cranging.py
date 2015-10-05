@@ -88,3 +88,17 @@ def get_initiator_addr(addr):
     """get initiator address for ranging node"""
     return i2c.read_word_data(addr, 0xEB)
 
+def set_freq_start(addr, f_start):
+    """set start of frequency range for ranging node"""
+    i2c.write_word_data(addr, 0xCA, initiator_addr)
+    return (i2c.read_byte(addr) == 0)
+
+def set_freq_step(addr, f_step):
+    """set step width of frequency range for ranging node"""
+    i2c.write_word_data(addr, 0xCB, initiator_addr)
+    return (i2c.read_byte(addr) == 0)
+
+def set_freq_stop(addr, f_stop):
+    """set stop of frequency range for ranging node"""
+    i2c.write_word_data(addr, 0xCC, initiator_addr)
+    return (i2c.read_byte(addr) == 0)
