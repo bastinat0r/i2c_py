@@ -14,11 +14,14 @@ if __name__ == '__main__':
     parser.add_argument('--target', type=auto_int, help='ranging id of target node')
     parser.add_argument('--num', type=auto_int, help='number of readings to take')
     parser.add_argument('--distance', type=float, help='distance value for csv file')
+    parser.add_argument('--angle', type=float, help='angle value for csv file')
     parser.add_argument('--csv', dest='csv', action='store_true')
     parser.set_defaults(feature=False, num=-1)
     args = parser.parse_args()
     if args.csv:
-        if args.distance:
+	if args.distance and args.angle != None:
+            print "from, to, dqf, range, status, distance, angle"
+        elif args.distance:
             print "from, to, dqf, range, status, distance"
         else:
             print "from, to, dqf, range, status"
@@ -38,7 +41,9 @@ if __name__ == '__main__':
                 sum += i[0]
                 div += i[1]
             if args.csv:
-                if args.distance:
+		if args.distance and args.angle != None:
+                    print "%x, %x, %i, %i, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'], args.distance, args.angle)
+                elif args.distance:
                     print "%x, %x, %i, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'], args.distance)
                 else:
                     print "%x, %x, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'])
