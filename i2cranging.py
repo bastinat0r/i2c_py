@@ -102,3 +102,10 @@ def set_freq_stop(addr, f_stop):
     """set stop of frequency range for ranging node"""
     i2c.write_word_data(addr, 0xCC, f_stop)
     return (i2c.read_byte(addr) == 0)
+
+def set_antenna_div(addr, antenna_div):
+    """ set antenna diversisty """
+    antenna_div_value = 0
+    if antenna_div:
+        antenna_div_value = 1
+    return i2c.read_byte_data(addr, 0xCD, antenna_div_value)
