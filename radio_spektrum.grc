@@ -9,10 +9,6 @@
       <value></value>
     </param>
     <param>
-      <key>alias</key>
-      <value></value>
-    </param>
-    <param>
       <key>window_size</key>
       <value></value>
     </param>
@@ -156,7 +152,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>1e6</value>
+      <value>8e6</value>
     </param>
   </block>
   <block>
@@ -486,7 +482,7 @@
     </param>
     <param>
       <key>fft_rate</key>
-      <value>15</value>
+      <value>30</value>
     </param>
     <param>
       <key>samp_rate</key>
@@ -553,11 +549,11 @@
     </param>
     <param>
       <key>fft_rate</key>
-      <value>30</value>
+      <value>10</value>
     </param>
     <param>
       <key>fft_size</key>
-      <value>1024</value>
+      <value>512</value>
     </param>
     <param>
       <key>freqvar</key>

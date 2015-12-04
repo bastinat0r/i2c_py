@@ -12,10 +12,12 @@ if __name__ == '__main__':
     parser.add_argument('address', type=auto_int, help='i2c address of ranging node to be used')
     parser.add_argument('--time', type=float, default=1, help='time to wait between each ranging')
     parser.add_argument('--target', type=auto_int, help='ranging id of target node')
+    parser.add_argument('--initiator', type=auto_int, help='ranging id of node for remote ranging')
     parser.add_argument('--num', type=auto_int, help='number of readings to take')
     parser.add_argument('--distance', type=float, help='distance value for csv file')
     parser.add_argument('--angle', type=float, help='angle value for csv file')
     parser.add_argument('--csv', dest='csv', action='store_true')
+    parser.add_argument('--remote', dest='remote', action='store_true')
     parser.set_defaults(feature=False, num=-1)
     args = parser.parse_args()
     if args.csv:
@@ -29,8 +31,13 @@ if __name__ == '__main__':
     while args.num < 0 or num_measurements < args.num:
         if(args.target):
             set_reflector_addr(args.address, args.target)
+        if(args.remote and args.initiator):
+            set_initiator_addr(args.address, args.iniator)
         try:
-            start_ranging(args.address)
+            if(remote):
+                start_remot_ranging(args.address)
+            else:
+                start_ranging(args.address)
             range_result = read_ranging_result(args.address)
             queue.append((range_result['range'], range_result['dqf']))
             if(len(queue) > 10):

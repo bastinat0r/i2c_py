@@ -2,7 +2,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Tue Oct 13 15:13:34 2015
+# Generated: Wed Dec  2 14:57:01 2015
 ##################################################
 
 if __name__ == '__main__':
@@ -38,7 +38,7 @@ class top_block(grc_wxgui.top_block_gui):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 1e6
+        self.samp_rate = samp_rate = 8e6
         self.frequency = frequency = 2.437
 
         ##################################################
@@ -74,8 +74,8 @@ class top_block(grc_wxgui.top_block_gui):
         	ref_level=0,
         	ref_scale=2.0,
         	sample_rate=samp_rate,
-        	fft_size=1024,
-        	fft_rate=30,
+        	fft_size=512,
+        	fft_rate=10,
         	average=True,
         	avg_alpha=0.8,
         	title="Waterfall Plot",
@@ -91,7 +91,7 @@ class top_block(grc_wxgui.top_block_gui):
         	ref_scale=2.0,
         	sample_rate=samp_rate,
         	fft_size=1024,
-        	fft_rate=15,
+        	fft_rate=30,
         	average=True,
         	avg_alpha=0.8,
         	title="FFT Plot",
