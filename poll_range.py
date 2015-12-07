@@ -28,14 +28,14 @@ if __name__ == '__main__':
         else:
             print "from, to, dqf, range, status"
     num_measurements = 0
-    while args.num < 0 or num_measurements < args.num:
+    while args.num < 0 or num_measurements <= args.num:
         if(args.target):
             set_reflector_addr(args.address, args.target)
         if(args.remote and args.initiator):
-            set_initiator_addr(args.address, args.iniator)
+            set_initiator_addr(args.address, args.initiator)
         try:
-            if(remote):
-                start_remot_ranging(args.address)
+            if(args.remote):
+                start_remote_ranging(args.address)
             else:
                 start_ranging(args.address)
             range_result = read_ranging_result(args.address)
@@ -48,12 +48,13 @@ if __name__ == '__main__':
                 sum += i[0]
                 div += i[1]
             if args.csv:
-		if args.distance and args.angle != None:
+		if args.distance and args.angle != None and num_measurements > 0:
                     print "%x, %x, %i, %i, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'], args.distance, args.angle)
-                elif args.distance:
+                elif args.distance and num_measurements > 0:
                     print "%x, %x, %i, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'], args.distance)
                 else:
-                    print "%x, %x, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'])
+		    if num_measurements > 0:
+                        print "%x, %x, %i, %i, %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], range_result['status'])
             else:
                 if(div > 0):
                     print "0x%x -> 0x%x, dqf: %i, range: %i, avg: %i, status: %i" %(range_result['addr1'],range_result['addr2'],range_result['dqf'], range_result['range'], sum / len(queue), range_result['status'])
